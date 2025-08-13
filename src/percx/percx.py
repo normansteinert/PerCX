@@ -1,6 +1,6 @@
 import numpy as np
 
-def PFC_species_response(dT, t, A_CO2, A_CH4, tau, C_max, decay_rate):
+def PFC_species_response(dT, t, A_CO2, A_CH4, tau, C_init, decay_rate):
     """
     Compute permafrost carbon loss response to temperature change.
     
@@ -22,18 +22,16 @@ def PFC_species_response(dT, t, A_CO2, A_CH4, tau, C_max, decay_rate):
     #gamma = 0.002   # Amplitude decay factor
 
     # Initialize remaining carbon pool
-    C_pool = C_max   # PgC
+    C_pool = C_init   # PgC
 
     for i in range(len(t)):
         # Compute potential emissions without constraint
-        #dC_CO2 = np.sum(A_CO2 * np.exp(-gamma * t[i]) * dT[:i+1] * np.exp(-(t[i] - t[:i+1]) / tau))
-        #dC_CH4 = np.sum(A_CH4 * np.exp(-gamma * t[i]) * dT[:i+1] * np.exp(-(t[i] - t[:i+1]) / tau))
         dC_CO2 = np.sum(A_CO2 * dT[:i+1] * np.exp(-(t[i] - t[:i+1]) / tau))
         dC_CH4 = np.sum(A_CH4 * dT[:i+1] * np.exp(-(t[i] - t[:i+1]) / tau))
 
         # Apply decay-based constraint: emissions are scaled by remaining carbon pool
-        dC_CO2 *= (C_pool / C_max) #* np.exp(-decay_rate * t[i])
-        dC_CH4 *= (C_pool / C_max) #* np.exp(-decay_rate * t[i])
+        dC_CO2 *= (C_pool / C_init)
+        dC_CH4 *= (C_pool / C_init)
         
         # Ensure we don't exceed available carbon pool
         total_emission = dC_CO2 + dC_CH4
