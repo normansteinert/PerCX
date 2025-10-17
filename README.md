@@ -6,4 +6,4 @@ PerCX is a simple permafrost carbon response model. The carbon response to clima
 
 PerCX is currently calibrated to AR6 Chapter 5 estimates of the permafrost carbon-climate feedback to temperature. The calibration is done with CMIP6 SSP2-4.5 surface temperature (tas) data, which is provided within the <code>/input</code> directory.
 
-Within the scripts/ directory, <code>PerCX_demo_stabilization.ipynb</code> shows an example use case for a 3°C stabilization scenario.
+Within the <code>scripts/</code> directory, <code>PerCX_demo_stabilization.ipynb</code> shows an example use case for a 3°C stabilization scenario.
